@@ -1,4 +1,9 @@
-begin {
-	do_some()
-}
 
+main stream(68, 120) {
+    part intro(12)
+    part verse1(12)
+    part chorus(12)
+    part solo(12)
+    part verse2(12)
+    part chorus(12)
+}
