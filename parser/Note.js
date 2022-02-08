@@ -44,7 +44,14 @@ class Note {
             return scope.define(name, this.eval(value, scope))
         }
 
-        // Varaible access
+        // Assignment
+        if (exp[0] === 'set') {
+            const [_, name, value] = exp
+
+            return scope.assign(name, this.eval(value, scope))
+        }
+
+        // Variable access
         if (isVariableName(exp)) {
             return scope.lookup(exp)
         }
@@ -143,6 +150,19 @@ assert.strictEqual(note.eval(
     'END',
     ]),
 15)
+
+// Assignment
+assert.strictEqual(note.eval(
+    ['BEGIN',
+        ['let', 'foo', 15],
+        ['BEGIN',
+            ['set', 'foo', 20],
+        'END',
+        ],
+        'foo',
+    'END',
+    ]),
+20)
 
 
 // End of tests
