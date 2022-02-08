@@ -2,9 +2,6 @@
  * Scope and storage for variables
 */
 
-const { builtinModules } = require("module")
-const { threadId } = require("worker_threads")
-
 class Scope {
     constructor(record = {}, parent = null) {
         this.record = record
