@@ -15,10 +15,8 @@ module.exports = note => {
             ['let', 'foo', 15],
             ['BEGIN',
                 ['set', 'foo', 20],
-            'END',
             ],
             'foo',
-        'END',
         ]),
     20)
 }

@@ -8,7 +8,6 @@ module.exports = note => {
             ['let', 'total', ['+', 3, 7]],
             ['let', 'num', 5],
             ['/', 'total', 'num'],
-        'END',
         ]),
     2)
     assert.strictEqual(note.eval(
@@ -16,10 +15,8 @@ module.exports = note => {
             ['let', 'foo', 5],
             ['BEGIN',
                 ['let', 'foo', ['+', 3, 7]],
-            'END',
             ],
             'foo',
-        'END',
         ]),
     5)
     assert.strictEqual(note.eval(
@@ -27,9 +24,7 @@ module.exports = note => {
             ['let', 'foo', 15],
             ['BEGIN',
                 'foo',
-            'END',
             ],
-        'END',
         ]),
     15)
 }

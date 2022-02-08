@@ -36,6 +36,24 @@ class Note {
             return this.eval(exp[1], scope) / this.eval(exp[2], scope)
         }
 
+        // Comparison operators
+        if (exp[0] === '>') {
+            return this.eval(exp[1], scope) > this.eval(exp[2], scope)
+        }
+
+        if (exp[0] === '>=') {
+            return this.eval(exp[1], scope) >= this.eval(exp[2], scope)
+        }
+
+        if (exp[0] === '<') {
+            return this.eval(exp[1], scope) < this.eval(exp[2], scope)
+        }
+
+        if (exp[0] === '<=') {
+            return this.eval(exp[1], scope) <= this.eval(exp[2], scope)
+        }
+
+
         // Variable declarations
         if (exp[0] === 'let') {
             const [_, name, value] = exp
@@ -56,10 +74,33 @@ class Note {
         }
 
         // Block
-        if (exp[0] === 'BEGIN' && exp.slice(-1)[0] === 'END') {
+        if (exp[0] === 'BEGIN') {
             const newScope = new Scope({}, scope)
 
             return this._evalBlock(exp, newScope)
+        }
+
+        // if-statement
+        if (exp[0] === 'if') {
+            const [_tag, condition, consequent, alternate] = exp
+
+            if (this.eval(condition, scope)) {
+                return this.eval(consequent, scope)
+            }
+
+            return this.eval(alternate, scope)
+        }
+
+        // while loop
+        if (exp[0] === 'while') {
+            let result
+            const [_tag, condition, body] = exp
+
+            while (this.eval(condition, scope)) {
+                result = this.eval(body, scope)
+            }
+
+            return result
         }
     
         throw `Unimplemented: ${JSON.stringify(exp)}`
@@ -68,7 +109,7 @@ class Note {
     _evalBlock(block, scope) {
         let result
 
-        const expressions = block.slice(1, -1)
+        const [_tag, ...expressions] = block
 
         expressions.forEach(exp => {
             result = this.eval(exp, scope)
