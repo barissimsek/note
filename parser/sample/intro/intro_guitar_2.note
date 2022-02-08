@@ -1,0 +1,7 @@
+#
+# Track name: intro_drum
+#
+
+BEGIN track => (0, 16, 120)
+    audio('drum.wav', {loop: true})
+END
